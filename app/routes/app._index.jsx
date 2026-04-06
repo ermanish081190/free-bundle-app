@@ -24,6 +24,41 @@ export const loader = async ({ request }) => {
 
   console.log("DISCOUNT FUNCTIONS:", JSON.stringify(json, null, 2));
 
+  
+  const FUNCTION_ID = "019d6107-3295-7ae3-b398-bd3ca1bdd631";
+  const DISCOUNT_TITLE = "Bundle Discount";
+
+  const mutation = `
+    mutation {
+      discountAutomaticAppCreate(
+        automaticAppDiscount: {
+          title: "${DISCOUNT_TITLE}"
+          functionId: "${FUNCTION_ID}"
+          startsAt: "${new Date().toISOString()}"
+          discountClasses: [PRODUCT]
+          combinesWith: {
+            orderDiscounts: true
+            productDiscounts: true
+            shippingDiscounts: true
+          }
+        }
+      ) {
+        automaticAppDiscount {
+          title
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const res1 = await admin.graphql(mutation);
+  const json1 = await res1.json();
+
+  console.log("DISCOUNT RESPONSE:", JSON.stringify(json1, null, 2));
+
   return null;
 };
 
