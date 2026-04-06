@@ -2,7 +2,7 @@
 
 client_id = "8221401b4aa114ec08ae4e2fd94361d7"
 name = "Free Bundle App"
-application_url = "https://example.com"
+application_url = "https://free-bundle-app.onrender.com"
 embedded = true
 
 [build]
@@ -24,7 +24,7 @@ api_version = "2026-04"
 scopes = "read_products,write_products,read_discounts,write_discounts"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://free-bundle-app.onrender.com/api/auth" ]
 
 [product.metafields.app.demo_info]
 type = "single_line_text_field"
