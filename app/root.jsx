@@ -1,5 +1,10 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
+export const headers = () => ({
+  "Content-Security-Policy":
+    "frame-ancestors https://admin.shopify.com https://admin.shopify.com/store/trvlbuddy;",
+});
+
 export default function App() {
   return (
     <html lang="en">
