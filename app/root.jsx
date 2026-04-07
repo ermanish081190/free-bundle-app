@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, Meta, Links, Scripts } from "react-router";
 import { addDocumentResponseHeaders } from "./shopify.server";
 
 export const headers = (headersArgs) => {
