@@ -24,7 +24,10 @@ api_version = "2026-04"
 scopes = "read_products,write_products,read_discounts,write_discounts"
 
 [auth]
-redirect_urls = [ "https://free-bundle-app.onrender.com/api/auth" ]
+redirect_urls = [
+  "https://free-bundle-app.onrender.com/auth",
+  "https://free-bundle-app.onrender.com/auth/callback"
+]
 
 [product.metafields.app.demo_info]
 type = "single_line_text_field"
