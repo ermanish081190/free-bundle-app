@@ -14,9 +14,13 @@ export const loader = async ({ request }) => {
 
 export default function App() {
   const { apiKey } = useLoaderData();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const host = params.get("host");
 
   return (
-    <AppProvider embedded apiKey={apiKey}>
+    <AppProvider embedded apiKey={apiKey} host={host}>
       <s-app-nav>
         <s-link href="/app">Home</s-link>
         <s-link href="/app/additional">Additional page</s-link>
