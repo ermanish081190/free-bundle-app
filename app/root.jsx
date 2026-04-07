@@ -1,4 +1,4 @@
-import { Links, Meta, Outlet, Scripts } from "@remix-run/react";
+import { Outlet } from "react-router";
 import { addDocumentResponseHeaders } from "./shopify.server";
 
 export const headers = (headersArgs) => {
