@@ -33,7 +33,7 @@ export const action = async ({ request }) => {
 
   //const FUNCTION_ID = "019d6107-3295-7ae3-b398-bd3ca1bdd631";
   const FUNCTION_ID = "019d6958-5a3a-7ab0-8d6f-0dec55c2497a";
-  const DISCOUNT_TITLE = "Bundle Discount";
+  const DISCOUNT_TITLE = "BUNDLE DISCOUNT";
 
   const mutation = `
     mutation {
