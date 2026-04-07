@@ -5,6 +5,24 @@ import { authenticate } from "../shopify.server";
 
 // ✅ CLEAN LOADER (no discount creation)
 export const loader = async ({ request }) => {
+   const { admin } = await authenticate.admin(request);
+
+  const query = `
+  {
+    shopifyFunctions(first: 10) {
+      nodes {
+        id
+        title
+        apiType
+      }
+    }
+  }
+  `;
+
+  const res = await admin.graphql(query);
+  const json = await res.json();
+
+  console.log("DISCOUNT FUNCTIONS:", JSON.stringify(json, null, 2));
 
   return null;
 };
@@ -76,12 +94,5 @@ export default function Index() {
 }
 
 export const headers = (headersArgs) => {
-  const headers = boundary.headers(headersArgs);
-
-  return {
-    ...headers,
-    ...headersArgs.loaderHeaders, // 👈 REQUIRED for auth redirect
-    "Content-Security-Policy":
-      "frame-ancestors https://admin.shopify.com https://admin.shopify.com/store/trvlbuddy;",
-  };
+  return boundary.headers(headersArgs);
 };
