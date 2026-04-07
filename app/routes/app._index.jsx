@@ -76,5 +76,12 @@ export default function Index() {
 }
 
 export const headers = (headersArgs) => {
-  return boundary.headers(headersArgs);
+  const headers = boundary.headers(headersArgs);
+
+  return {
+    ...headers,
+    ...headersArgs.loaderHeaders, // 👈 REQUIRED for auth redirect
+    "Content-Security-Policy":
+      "frame-ancestors https://admin.shopify.com https://admin.shopify.com/store/trvlbuddy;",
+  };
 };
