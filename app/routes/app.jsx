@@ -1,12 +1,10 @@
-import { Outlet, useLoaderData, useLocation, useRouteError } from "react-router";
+import { Outlet, useLoaderData, useRouteError } from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { AppProvider } from "@shopify/shopify-app-react-router/react";
 import { authenticate } from "../shopify.server";
 
 export const loader = async ({ request }) => {
- await authenticate.admin(request, {
-    returnHeaders: true,
-  });
+  await authenticate.admin(request);
 
   // eslint-disable-next-line no-undef
   return { apiKey: process.env.SHOPIFY_API_KEY || "" };
@@ -14,13 +12,9 @@ export const loader = async ({ request }) => {
 
 export default function App() {
   const { apiKey } = useLoaderData();
-  const location = useLocation();
-
-  const params = new URLSearchParams(location.search);
-  const host = params.get("host");
 
   return (
-    <AppProvider embedded apiKey={apiKey} host={host}>
+    <AppProvider embedded apiKey={apiKey}>
       <s-app-nav>
         <s-link href="/app">Home</s-link>
         <s-link href="/app/additional">Additional page</s-link>
@@ -36,12 +30,5 @@ export function ErrorBoundary() {
 }
 
 export const headers = (headersArgs) => {
-   const headers = boundary.headers(headersArgs);
-
-  return {
-    ...headers,
-    ...headersArgs.loaderHeaders, // 👈 REQUIRED for auth redirect
-    "Content-Security-Policy":
-      "frame-ancestors https://admin.shopify.com https://admin.shopify.com/store/trvlbuddy;",
-  };
+  return boundary.headers(headersArgs);
 };
