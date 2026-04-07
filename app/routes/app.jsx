@@ -12,17 +12,13 @@ export const loader = async ({ request }) => {
 
 export default function App() {
   const { apiKey } = useLoaderData();
-  const location = useLocation();
-
-  const params = new URLSearchParams(location.search);
-  const host = params.get("host");
 
   return (
-    <AppProvider embedded apiKey={apiKey} host={host}>
-      <nav>
-        <a href="/app">Home</a> |{" "}
-        <a href="/app/additional">Additional page</a>
-      </nav>
+    <AppProvider embedded apiKey={apiKey}>
+      <div style={{ padding: "20px", background: "yellow" }}>
+        <h1>APP LAYOUT IS WORKING</h1>
+      </div>
+
       <Outlet />
     </AppProvider>
   );
