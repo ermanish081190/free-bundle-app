@@ -2,7 +2,7 @@
 
 client_id = "b2e5d9efb5920994e2dfaefe742fadd8"
 name = "Bundle Discount App"
-application_url = "https://example.com"
+application_url = "https://free-bundle-app.onrender.com"
 embedded = true
 
 [webhooks]
