@@ -9,32 +9,33 @@ function coreLogic(input) {
   }
 
   for (const bundle of bundles) {
-    const triggerVariantId = bundle.triggerProductVariantId;
+    const triggerProductId = bundle.triggerProductId;
     const buyQty = Number(bundle.buyQty || 1);
-    const freeVariants = bundle.freeProductVariants || [];
+    const freeProducts = bundle.freeProducts || [];
 
-    if (!triggerVariantId || !freeVariants.length) continue;
+    if (!triggerProductId || !freeProducts.length) continue;
 
-    // 🔹 Count trigger quantity
+    // 🔹 Count trigger quantity (ANY variant of product)
     let triggerQty = 0;
 
     for (const line of input.cart.lines) {
-      if (line?.merchandise?.id === triggerVariantId) {
+       console.log("CART ITEM LINE DETAIL:", JSON.stringify(line, null, 2));
+      if (line?.merchandise?.product?.id === triggerProductId) {
         triggerQty += line.quantity || 0;
       }
     }
 
     if (triggerQty < buyQty) continue;
 
-    // 🔥 Handle same variant case
-    const sameVariantFree = freeVariants.find(
-      f => f.productVariantId === triggerVariantId
+    // 🔥 Handle same product case
+    const sameProductFree = freeProducts.find(
+      f => f.productId === triggerProductId
     );
 
     let multiplier;
 
-    if (sameVariantFree) {
-      const bundleSize = buyQty + sameVariantFree.qty;
+    if (sameProductFree) {
+      const bundleSize = buyQty + sameProductFree.qty;
       multiplier = Math.floor(triggerQty / bundleSize);
     } else {
       multiplier = Math.floor(triggerQty / buyQty);
@@ -42,26 +43,25 @@ function coreLogic(input) {
 
     if (multiplier <= 0) continue;
 
-    // ✅ COLLECT ALL TARGETS HERE
     const targets = [];
 
-    for (const free of freeVariants) {
-      const targetVariantId = free.productVariantId;
+    for (const free of freeProducts) {
+      const targetProductId = free.productId;
       let remainingQty = free.qty * multiplier;
 
-      if (!targetVariantId || remainingQty <= 0) continue;
+      if (!targetProductId || remainingQty <= 0) continue;
 
       for (const line of input.cart.lines) {
+        const productId = line?.merchandise?.product?.id;
         const variantId = line?.merchandise?.id;
         const lineId = line.id;
         const qty = line.quantity || 0;
 
-        if (!variantId || !lineId) continue;
+        if (!productId || !lineId) continue;
 
-        if (variantId === targetVariantId && remainingQty > 0) {
+        if (productId === targetProductId && remainingQty > 0) {
           const applyQty = Math.min(qty, remainingQty);
 
-          // ✅ ADD TO SAME TARGET ARRAY
           targets.push({
             cartLine: {
               id: lineId,
@@ -74,7 +74,6 @@ function coreLogic(input) {
       }
     }
 
-    // ✅ PUSH ONLY ONE CANDIDATE PER BUNDLE
     if (targets.length > 0) {
       discounts.push({
         message: "FREEBUNDLE",
