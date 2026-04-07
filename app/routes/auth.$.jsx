@@ -7,5 +7,8 @@ export const loader = async ({ request }) => {
 };
 
 export const headers = (headersArgs) => {
-  return boundary.headers(headersArgs);
+  return {
+    ...boundary.headers(headersArgs),
+    ...headersArgs.loaderHeaders,
+  };
 };
