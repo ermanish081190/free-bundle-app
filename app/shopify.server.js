@@ -17,6 +17,10 @@ const shopify = shopifyApp({
   sessionStorage: new PrismaSessionStorage(prisma),
   distribution: AppDistribution.AppStore,
   isEmbeddedApp: true,
+  cookie: {
+    secure: true,      // 👈 REQUIRED for HTTPS (Render)
+    sameSite: "none",  // 👈 REQUIRED for iframe
+  },
   future: {
     expiringOfflineAccessTokens: true,
   },
