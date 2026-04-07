@@ -1,8 +1,7 @@
-import { Outlet, useLoaderData, useRouteError } from "react-router";
+import { Outlet, useLoaderData, useLocation, useRouteError } from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { AppProvider } from "@shopify/shopify-app-react-router/react";
 import { authenticate } from "../shopify.server";
-import { Outlet, useLoaderData, useLocation } from "react-router";
 
 export const loader = async ({ request }) => {
   await authenticate.admin(request);
