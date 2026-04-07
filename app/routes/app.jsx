@@ -4,7 +4,9 @@ import { AppProvider } from "@shopify/shopify-app-react-router/react";
 import { authenticate } from "../shopify.server";
 
 export const loader = async ({ request }) => {
-  await authenticate.admin(request);
+ await authenticate.admin(request, {
+    returnHeaders: true,
+  });
 
   // eslint-disable-next-line no-undef
   return { apiKey: process.env.SHOPIFY_API_KEY || "" };
@@ -30,10 +32,11 @@ export function ErrorBoundary() {
 }
 
 export const headers = (headersArgs) => {
-  const defaultHeaders = boundary.headers(headersArgs);
+   const headers = boundary.headers(headersArgs);
 
   return {
-    ...defaultHeaders,
+    ...headers,
+    ...headersArgs.loaderHeaders, // 👈 REQUIRED for auth redirect
     "Content-Security-Policy":
       "frame-ancestors https://admin.shopify.com https://admin.shopify.com/store/trvlbuddy;",
   };
