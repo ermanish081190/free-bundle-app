@@ -10,7 +10,7 @@ export const loader = async ({ request }) => {
 
 export default function App() {
   const { apiKey } = useLoaderData();
-
+  console.log("API KEY:", apiKey);
   return (
     <AppProvider embedded apiKey={apiKey}>
       <s-app-nav>
