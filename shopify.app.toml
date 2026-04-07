@@ -25,8 +25,8 @@ scopes = "read_products,write_products,read_discounts,write_discounts"
 
 [auth]
 redirect_urls = [
-  "https://free-bundle-app.onrender.com/auth",
-  "https://free-bundle-app.onrender.com/auth/callback"
+  "https://free-bundle-app.onrender.com/api/auth",
+  "https://free-bundle-app.onrender.com/api/auth/callback"
 ]
 
 [product.metafields.app.demo_info]
